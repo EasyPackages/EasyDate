@@ -1,0 +1,33 @@
+{
+  "configurations" : [
+    {
+      "id" : "C0DB0017-5F97-4287-9561-31E0EEB7E479",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : {
+      "targets" : [
+        {
+          "containerPath" : "container:",
+          "identifier" : "EasyDate",
+          "name" : "EasyDate"
+        }
+      ]
+    },
+    "testExecutionOrdering" : "random"
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "EasyDateTests",
+        "name" : "EasyDateTests"
+      }
+    }
+  ],
+  "version" : 1
+}
