@@ -4,6 +4,13 @@
 
 **EasyDate** is a Swift package that simplifies working with dates, times, time zones, and localized formatting. It provides extensions and utilities to manipulate and format dates easily and efficiently, with support for multiple languages and international standards.
 
+## Advantages
+
+- **Simplicity**: Intuitive APIs for date manipulation and formatting.
+- **Localization**: Comprehensive support for languages and regional standards.
+- **Flexibility**: Allows creating custom formatting patterns.
+- **Compatibility**: Ideal for projects requiring international support and API integration.
+
 ## Usage Examples
 
 ```swift
@@ -42,13 +49,6 @@ let daysAfter = Date.now + .days(1)
 // Handling optional dates
 "15.05.2025".date.orNow.formatted(using: .day) // "15"
 ```
-
-## Advantages
-
-- **Simplicity**: Intuitive APIs for date manipulation and formatting.
-- **Localization**: Comprehensive support for languages and regional standards.
-- **Flexibility**: Allows creating custom formatting patterns.
-- **Compatibility**: Ideal for projects requiring international support and API integration.
 
 ## Installation
 
