@@ -1,3 +1,8 @@
+//
+// Created by Paolo Prodossimo Lopes
+// Open-source utility for Date - Use freely with attribution.
+//
+
 import Foundation
 
 ///
@@ -20,24 +25,12 @@ public extension Calendar {
     ///
     /// Gregorian calendar — the most widely used civil calendar internationally.
     ///
-    /// Configured with a POSIX locale for consistent behavior across systems and languages.
-    ///
-    static let gregorian: Calendar = {
-        var calendar = Calendar(identifier: .gregorian)
-        calendar.locale = Locale(identifier: "en_US_POSIX")
-        return calendar
-    }()
+    static let gregorian = Calendar(identifier: .gregorian)
     
     ///
     /// ISO 8601 calendar — used for technical, international, and business standards.
     ///
-    /// Configured with a POSIX locale for predictable results regardless of user settings.
-    ///
-    static let iso8601: Calendar = {
-        var calendar = Calendar(identifier: .iso8601)
-        calendar.locale = Locale(identifier: "en_US_POSIX")
-        return calendar
-    }()
+    static let iso8601 = Calendar(identifier: .iso8601)
     
     ///
     /// Buddhist calendar — used in Thailand and other Southeast Asian countries.

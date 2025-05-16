@@ -1,12 +1,10 @@
-// DateInitializersTests.swift
-
 import Testing
 import Foundation
 
 @testable import EasyDate
 
 @Suite("Date")
-struct DateInitializersTests {
+struct DateExtensionsTests {
     
     @Suite("Date(year:month:day:)")
     struct YearMonthDay {
@@ -333,45 +331,56 @@ struct DateInitializersTests {
     @Suite(".formatted(using:)")
     struct DateFormattedUsingTests {
 
-        private let testDate = makeDate(year: 2025, month: 5, day: 15, hour: 14, minute: 30)!
+        private let testDate = makeDate(
+            year: 2025,
+            month: 5,
+            day: 15,
+            hour: 14,
+            minute: 30,
+            timeZone: TimeZone.gmt
+        )!
 
         func sut(using formatter: DateFormatter) -> String {
-            testDate.formatted(using: formatter)
+            testDate.formatted(using: formatter, timeZone: .gmt)
         }
 
         @Test("iso8601")
         func iso8601() {
-            #expect(sut(using: .iso8601) == "2025-05-15T17:30:00Z")
+            #expect(sut(using: .iso8601) == "2025-05-15T14:30:00Z")
+        }
+        
+        @Test("iso8601")
+        func iso8601WithLocale() {
+            #expect(testDate.formatted(using: .iso8601, timeZone: .newYork) == "2025-05-15T10:30:00-04:00")
         }
 
         @Test("logTimestamp")
         func logTimestamp() {
-            #expect(sut(using: .logTimestamp) == "2025-05-15 14:30:00")
+            #expect(sut(using: .timestamp) == "2025-05-15 14:30:00")
         }
 
         @Test("yearOnly")
         func yearOnly() {
-            #expect(sut(using: .yearOnly(locale: .enUS)) == "2025")
+            #expect(sut(using: .year) == "2025")
         }
 
         @Test("monthNumber")
         func monthNumber() {
-            #expect(sut(using: .monthNumber(locale: .enUS)) == "05")
+            #expect(sut(using: .month) == "05")
         }
 
         @Test("day")
         func day() {
-            #expect(sut(using: .day(locale: .enUS)) == "15")
+            #expect(sut(using: .day) == "15")
         }
 
         @Test("custom pattern")
         func custom() {
-            let formatter = DateFormatter.custom("MMM yyyy", locale: .enUS)
-            #expect(sut(using: formatter) == "May 2025")
+            let formatter = DateFormatter.custom("MMM yyyy")
+            #expect(sut(using: formatter) == "mai. 2025")
         }
     }
 
-    
     fileprivate static func makeDate(
         year: Int,
         month: Int,

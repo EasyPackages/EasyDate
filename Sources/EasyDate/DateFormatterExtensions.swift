@@ -1,3 +1,8 @@
+//
+// Created by Paolo Prodossimo Lopes
+// Open-source utility for Date - Use freely with attribution.
+//
+
 import Foundation
 
 ///
@@ -24,7 +29,7 @@ public extension DateFormatter {
     static var iso8601: DateFormatter {
         let f = DateFormatter()
         f.calendar = Calendar(identifier: .iso8601)
-        f.timeZone = TimeZone(secondsFromGMT: 0)
+        f.timeZone = .gmt
         f.locale = Locale(identifier: "en_US_POSIX")
         f.dateFormat = "yyyy-MM-dd'T'HH:mm:ssXXXXX"
         return f
@@ -39,7 +44,7 @@ public extension DateFormatter {
     ///
     /// - Uses `en_US_POSIX` and system timezone.
     ///
-    static var logTimestamp: DateFormatter {
+    static var timestamp: DateFormatter {
         let f = DateFormatter()
         f.locale = Locale(identifier: "en_US_POSIX")
         f.dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -49,89 +54,68 @@ public extension DateFormatter {
     ///
     /// Formatter for time only (e.g. `"14:30"` or `"2:30 PM"`), localized.
     ///
-    /// - Parameter locale: The locale to use (default is `.current`).
-    ///
-    static func time(locale: Locale = .current) -> DateFormatter {
+    static var time: DateFormatter {
         let f = DateFormatter()
         f.timeStyle = .short
         f.dateStyle = .none
-        f.locale = locale
         return f
     }
 
     ///
     /// Formatter for date only (e.g. `"15/05/25"` or `"5/15/25"`), localized.
     ///
-    /// - Parameter locale: The locale to use (default is `.current`).
-    ///
-    static func date(locale: Locale = .current) -> DateFormatter {
+    static var date: DateFormatter {
         let f = DateFormatter()
         f.dateStyle = .short
         f.timeStyle = .none
-        f.locale = locale
         return f
     }
 
     ///
     /// Formatter for date and time (e.g. `"15/05/25 14:30"`), localized.
     ///
-    /// - Parameter locale: The locale to use (default is `.current`).
-    ///
-    static func dateTime(locale: Locale = .current) -> DateFormatter {
+    static var dateTime: DateFormatter {
         let f = DateFormatter()
         f.dateStyle = .short
         f.timeStyle = .short
-        f.locale = locale
         return f
     }
 
     ///
     /// Formatter for full written date (e.g. `"quinta-feira, 15 de maio de 2025"`), localized.
     ///
-    /// - Parameter locale: The locale to use (default is `.current`).
-    ///
-    static func fullDate(locale: Locale = .current) -> DateFormatter {
+    static var fullDate: DateFormatter {
         let f = DateFormatter()
         f.dateStyle = .full
         f.timeStyle = .none
-        f.locale = locale
         return f
     }
 
     ///
     /// Formatter for long written date (e.g. `"15 de maio de 2025"`), localized.
     ///
-    /// - Parameter locale: The locale to use (default is `.current`).
-    ///
-    static func longDate(locale: Locale = .current) -> DateFormatter {
+    static var longDate: DateFormatter {
         let f = DateFormatter()
         f.dateStyle = .long
         f.timeStyle = .none
-        f.locale = locale
         return f
     }
 
     ///
     /// Formatter for weekday name (e.g. `"quinta-feira"` or `"Thursday"`), localized.
     ///
-    /// - Parameter locale: The locale to use (default is `.current`).
-    ///
-    static func weekday(locale: Locale = .current) -> DateFormatter {
+    static var weekday: DateFormatter {
         let f = DateFormatter()
         f.dateFormat = "EEEE"
-        f.locale = locale
         return f
     }
 
     ///
     /// Formatter for month and year (e.g. `"maio 2025"` or `"May 2025"`), localized.
     ///
-    /// - Parameter locale: The locale to use (default is `.current`).
-    ///
-    static func monthYear(locale: Locale = .current) -> DateFormatter {
+    static var monthYear: DateFormatter {
         let f = DateFormatter()
         f.dateFormat = "LLLL yyyy"
-        f.locale = locale
         return f
     }
 
@@ -146,10 +130,8 @@ public extension DateFormatter {
     ///   - `"May 15"` in English
     ///   - `"5月15日"` in Japanese
     ///
-    /// - Parameter locale: The locale to use (default is `.current`)
-    static func dayMonth(locale: Locale = .current) -> DateFormatter {
+    static var dayMonth: DateFormatter {
         let f = DateFormatter()
-        f.locale = locale
         f.setLocalizedDateFormatFromTemplate("d MMMM")
         return f
     }
@@ -159,10 +141,9 @@ public extension DateFormatter {
     ///
     /// Useful for analytics, graphs, or reports.
     ///
-    static func yearOnly(locale: Locale = .current) -> DateFormatter {
+    static var year: DateFormatter {
         let f = DateFormatter()
         f.dateFormat = "yyyy"
-        f.locale = locale
         return f
     }
 
@@ -171,10 +152,9 @@ public extension DateFormatter {
     ///
     /// Useful for technical parsing or sorting.
     ///
-    static func monthNumber(locale: Locale = .current) -> DateFormatter {
+    static var month: DateFormatter {
         let f = DateFormatter()
         f.dateFormat = "MM"
-        f.locale = locale
         return f
     }
 
@@ -183,10 +163,9 @@ public extension DateFormatter {
     ///
     /// Useful for grids or analytics.
     ///
-    static func day(locale: Locale = .current) -> DateFormatter {
+    static var day: DateFormatter {
         let f = DateFormatter()
         f.dateFormat = "dd"
-        f.locale = locale
         return f
     }
 
@@ -195,17 +174,15 @@ public extension DateFormatter {
     ///
     /// - Parameters:
     ///   - pattern: The `dateFormat` string to use.
-    ///   - locale: The locale to use (default is `.current`).
     ///
     /// ### Example
     /// ```swift
     /// DateFormatter.custom("MMM yyyy").string(from: Date())
     /// ```
     ///
-    static func custom(_ pattern: String, locale: Locale = .current) -> DateFormatter {
+    static func custom(_ pattern: String) -> DateFormatter {
         let f = DateFormatter()
         f.dateFormat = pattern
-        f.locale = locale
         return f
     }
 }

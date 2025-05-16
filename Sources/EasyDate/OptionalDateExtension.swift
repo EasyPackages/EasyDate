@@ -1,3 +1,8 @@
+//
+// Created by Paolo Prodossimo Lopes
+// Open-source utility for Date - Use freely with attribution.
+//
+
 import Foundation
 
 public extension Optional where Wrapped == Date {

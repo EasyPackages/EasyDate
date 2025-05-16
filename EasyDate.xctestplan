@@ -18,6 +18,12 @@
         }
       ]
     },
+    "language" : "pt-BR",
+    "locationScenario" : {
+      "identifier" : "Rio de Janeiro, Brazil",
+      "referenceType" : "built-in"
+    },
+    "region" : "BR",
     "testExecutionOrdering" : "random"
   },
   "testTargets" : [

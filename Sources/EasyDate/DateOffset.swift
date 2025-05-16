@@ -1,3 +1,8 @@
+//
+// Created by Paolo Prodossimo Lopes
+// Open-source utility for Date - Use freely with attribution.
+//
+
 import Foundation
 
 public extension Date {
@@ -97,6 +102,23 @@ public extension Date {
     static func + (lhs: Date, rhs: DateOffset) -> Date? {
         Calendar.current.date(byAdding: rhs.component, value: rhs.value, to: lhs)
     }
+    
+    ///
+    /// Adds a `DateOffset` to a `Date`, returning a new date adjusted by the given component and value.
+    ///
+    /// - Parameters:
+    ///   - lhs: The `DateOffset` to add.
+    ///   - rhs: The base `Date`.
+    /// - Returns: A new `Date` adjusted by the specified offset, or `nil` if the result is invalid.
+    ///
+    /// ### Example
+    /// ```swift
+    /// let newDate = Date.now + .days(10)
+    /// ```
+    ///
+    static func + (lhs: DateOffset, rhs: Date) -> Date? {
+        Calendar.current.date(byAdding: lhs.component, value: lhs.value, to: rhs)
+    }
 
     ///
     /// Subtracts a `DateOffset` from a `Date`, returning a new date adjusted negatively by the component and value.
@@ -113,5 +135,22 @@ public extension Date {
     ///
     static func - (lhs: Date, rhs: DateOffset) -> Date? {
         Calendar.current.date(byAdding: rhs.component, value: -rhs.value, to: lhs)
+    }
+    
+    ///
+    /// Subtracts a `DateOffset` from a `Date`, returning a new date adjusted negatively by the component and value.
+    ///
+    /// - Parameters:
+    ///   - lhs: The `DateOffset` to subtract.
+    ///   - rhs: The base `Date`.
+    /// - Returns: A new `Date` adjusted by the negative offset, or `nil` if the result is invalid.
+    ///
+    /// ### Example
+    /// ```swift
+    /// let pastDate = Date.now - .months(2)
+    /// ```
+    ///
+    static func - (lhs: DateOffset, rhs: Date) -> Date? {
+        Calendar.current.date(byAdding: lhs.component, value: -lhs.value, to: rhs)
     }
 }

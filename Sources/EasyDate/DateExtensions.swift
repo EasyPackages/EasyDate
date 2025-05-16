@@ -1,3 +1,8 @@
+//
+// Created by Paolo Prodossimo Lopes
+// Open-source utility for Date - Use freely with attribution.
+//
+
 import Foundation
 
 ///
@@ -26,9 +31,11 @@ public extension Date {
     /// }
     /// ```
     ///
-    init?(year: Int, month: Int, day: Int) {
+    init?(year: Int, month: Int, day: Int, calendar: Calendar = .current, timeZone: TimeZone = .current) {
+        var calendar = calendar
+        calendar.timeZone = timeZone
+        
         let components = DateComponents(year: year, month: month, day: day)
-        let calendar = Calendar.current
         
         guard let date = calendar.date(from: components),
               calendar.dateComponents([.year, .month, .day], from: date) == components else {
@@ -50,67 +57,16 @@ public extension Date {
     /// }
     /// ```
     ///
-    init?(year: Int, month: Int, day: Int, hour: Int, minute: Int) {
+    init?(year: Int, month: Int, day: Int, hour: Int, minute: Int, calendar: Calendar = .current, timeZone: TimeZone = .current) {
+        var cal = calendar
         let components = DateComponents(
             year: year, month: month, day: day,
             hour: hour, minute: minute
         )
-        let calendar = Calendar.current
+        cal.timeZone = timeZone
         
-        guard let date = calendar.date(from: components),
-              calendar.dateComponents([.year, .month, .day, .hour, .minute], from: date) == components else {
-            return nil
-        }
-        
-        self = date
-    }
-    
-    ///
-    /// Initializes a `Date` from a given year, month, day, hour, minute, and custom time zone.
-    ///
-    /// Returns `nil` if the provided values do not resolve to a valid date in the specified time zone.
-    ///
-    /// - Parameters:
-    ///   - year: The target year
-    ///   - month: The month (1...12)
-    ///   - day: The day of the month
-    ///   - hour: The hour (0...23)
-    ///   - minute: The minute (0...59)
-    ///   - timeZone: The desired `TimeZone` (e.g., `.gmt`, `TimeZone(identifier: "America/Sao_Paulo")`)
-    ///
-    /// - Example:
-    /// ```swift
-    /// let gmt = TimeZone(secondsFromGMT: 0)!
-    /// if let date = Date(year: 2025, month: 12, day: 1, hour: 12, minute: 10, timeZone: gmt) {
-    ///     print(date.iso8601String)
-    /// }
-    /// ```
-    ///
-    init?(year: Int, month: Int, day: Int, hour: Int, minute: Int, timeZone: TimeZone) {
-        var calendar = Calendar.current
-        calendar.timeZone = timeZone
-        
-        let components = DateComponents(
-            timeZone: timeZone,
-            year: year,
-            month: month,
-            day: day,
-            hour: hour,
-            minute: minute
-        )
-        
-        guard let date = calendar.date(from: components) else { return nil }
-        
-        let extracted = calendar.dateComponents(
-            [.year, .month, .day, .hour, .minute],
-            from: date
-        )
-        
-        guard extracted.year == year,
-              extracted.month == month,
-              extracted.day == day,
-              extracted.hour == hour,
-              extracted.minute == minute else {
+        guard let date = cal.date(from: components),
+              cal.dateComponents([.year, .month, .day, .hour, .minute], from: date) == components else {
             return nil
         }
         
@@ -272,23 +228,60 @@ public extension Date {
     }
     
     ///
-    /// Retorna uma string formatada da data atual usando um `DateFormatter` fornecido.
+    /// Returns a formatted string of the current date using a provided `DateFormatter`.
     ///
-    /// Esta função utiliza o `DateFormatter` passado como parâmetro para formatar o
-    /// objeto `Date` (`self`) em uma representação textual conforme o padrão definido no formatter.
+    /// This function uses the given `DateFormatter` to convert the `Date` object (`self`)
+    /// into a textual representation according to the format specified by the formatter.
     ///
-    /// - Parâmetros:
-    ///   - formatter: Um objeto `DateFormatter` configurado com o padrão e locale desejados.
-    ///                 Responsável por converter a data em uma string formatada.
+    /// - Parameters:
+    ///   - formatter: A `DateFormatter` object configured with the desired format and locale.
+    ///                Responsible for converting the date into a formatted string.
     ///
-    /// - Retorna: Uma string que representa a data formatada de acordo com o formatter fornecido.
+    /// - Returns: A string representing the date formatted according to the provided formatter.
     ///
-    /// - Exemplo de uso:
+    /// - Example usage:
     /// ```swift
-    /// print(Date.now.formatted(using: .iso8601)) // Exemplo: "2025-05-15 14:30:00"
+    /// print(Date.now.formatted(using: .iso8601)) // Example: "2025-05-15 14:30:00"
     /// ```
     ///
     func formatted(using formatter: DateFormatter) -> String {
         formatter.string(from: self)
+    }
+    
+    ///
+    /// Returns a formatted string representation of the date using the specified `DateFormatter`,
+    /// with customizable `Locale` and `TimeZone` settings.
+    ///
+    /// This method allows you to format the date into a string, while optionally specifying
+    /// the locale and timezone to be used by the formatter. By default, it uses the system's
+    /// current locale and timezone, but you can override these parameters to format the date
+    /// for different regions or time zones.
+    ///
+    /// - Parameters:
+    ///   - formatter: A configured `DateFormatter` instance used to convert the date to a string.
+    ///   - locale: The `Locale` to use for formatting the date. Defaults to `.current`.
+    ///   - timeZone: The `TimeZone` to apply when formatting the date. Defaults to `.current`.
+    ///
+    /// - Returns: A string representing the formatted date according to the provided formatter,
+    ///   locale, and timezone.
+    ///
+    /// - Important:
+    ///   Modifying the formatter's `locale` and `timeZone` properties inside this method
+    ///   affects the formatting behavior. If you reuse the formatter instance elsewhere,
+    ///   be aware that its locale and timezone might have been changed.
+    ///
+    /// - Example:
+    /// ```swift
+    /// let date = Date()
+    /// let formatter = DateFormatter()
+    /// formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+    /// let formattedDate = date.formatted(using: formatter, locale: Locale(identifier: "en_US"), timeZone: TimeZone(abbreviation: "PST")!)
+    /// print(formattedDate) // e.g., "2025-05-15 07:30:00"
+    /// ```
+    ///
+    func formatted(using formatter: DateFormatter, locale: Locale = .current, timeZone: TimeZone = .current) -> String {
+        formatter.locale = locale
+        formatter.timeZone = timeZone
+        return formatted(using: formatter)
     }
 }
