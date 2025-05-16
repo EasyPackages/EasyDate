@@ -1,5 +1,7 @@
 ![banner](./docs/banner.jpg)
 
+[![Swift](https://github.com/EasyPackages/EasyDate/actions/workflows/swift.yml/badge.svg)](https://github.com/EasyPackages/EasyDate/actions/workflows/swift.yml)
+
 **EasyDate** is a Swift package that simplifies working with dates, times, time zones, and localized formatting. It provides extensions and utilities to manipulate and format dates easily and efficiently, with support for multiple languages and international standards.
 
 ## Usage Examples
