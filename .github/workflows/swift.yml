@@ -1,7 +1,0 @@
-name: Swift Package Manager
-
-on: [push, pull_request]
-
-jobs:
-  use-reusable:
-    uses: EasyPackages/.github/.github/workflows/ci.yml@main
