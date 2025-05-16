@@ -341,7 +341,7 @@ struct DateExtensionsTests {
         )!
 
         func sut(using formatter: DateFormatter) -> String {
-            testDate.formatted(using: formatter, timeZone: .gmt)
+            testDate.formatted(using: formatter, locale: .enUS, timeZone: .gmt)
         }
 
         @Test("iso8601")
@@ -377,7 +377,7 @@ struct DateExtensionsTests {
         @Test("custom pattern")
         func custom() {
             let formatter = DateFormatter.custom("MMM yyyy")
-            #expect(sut(using: formatter) == "mai. 2025")
+            #expect(sut(using: formatter) == "May 2025")
         }
     }
 
