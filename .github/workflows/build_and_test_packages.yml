@@ -4,4 +4,4 @@ on: [push, pull_request]
 
 jobs:
   use-reusable:
-    uses: EasyPackages/.github/.github/workflows/build_and_test_packages.yml@main
+    uses: .github/.github/workflows/build_and_test_packages.yml@main
