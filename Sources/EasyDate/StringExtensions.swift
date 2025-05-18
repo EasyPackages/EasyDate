@@ -106,7 +106,7 @@ public extension String {
         ]
         
         let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.locale = Locale.enUSPOSIX
         formatter.timeZone = .gmt
         
         for format in formats {
