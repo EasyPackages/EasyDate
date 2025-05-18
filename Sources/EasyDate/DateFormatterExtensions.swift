@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import EasyCore
 
 ///
 /// A collection of reusable and localized `DateFormatter` configurations.
@@ -30,7 +31,7 @@ public extension DateFormatter {
         let f = DateFormatter()
         f.calendar = Calendar(identifier: .iso8601)
         f.timeZone = .gmt
-        f.locale = Locale(identifier: "en_US_POSIX")
+        f.locale = Locale.enUSPOSIX
         f.dateFormat = "yyyy-MM-dd'T'HH:mm:ssXXXXX"
         return f
     }
@@ -46,7 +47,7 @@ public extension DateFormatter {
     ///
     static var timestamp: DateFormatter {
         let f = DateFormatter()
-        f.locale = Locale(identifier: "en_US_POSIX")
+        f.locale = Locale.enUSPOSIX
         f.dateFormat = "yyyy-MM-dd HH:mm:ss"
         return f
     }
